@@ -29,10 +29,11 @@
             <td>TRANSACCION</td>
             <td>PERIODO</td>
             <td>CÓDIGO</td>
-            <td>MONTO</td>
+            <td>MONTO (Bs)</td>
+            <td>COMISIÓN QP (Bs)</td>
+            <td>MONTO FINAL (Bs)</td>
             <td>MENSAJE DEUDA</td>
             <td>MENSAJE CONTRATO</td>
-            <td>TIPO DE DOCUMENTO</td>
             <td>NRO DE DOCUMENTO</td>
             <td>FECHA DE PAGO</td>
           </tr>
@@ -47,9 +48,10 @@
           <td>{{ item.periodo }}</td>
           <td>{{ item.codigo_deuda }} </td>
           <td>{{ item.monto }}</td>
+          <td>{{ item.comision_qp }}</td>
+          <td>{{ item.monto_final }}</td>
           <td>{{ item.mensaje_deuda }}</td>
           <td>{{ item.mensaje_contrato }}</td>
-          <td>{{ item.tipo_documento }}</td>
           <td>{{ item.numero_documento }}</td>
           <td>{{ item.fecha_pago }}</td>
         </tr>
