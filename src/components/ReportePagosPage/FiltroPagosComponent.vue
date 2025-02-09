@@ -6,37 +6,37 @@
       <v-card-text>
         <v-row>
           <v-col cols="12" md="6">
-            <v-text-field v-model="filters.nombre_completo" label="Nombre Completo" variant="outlined"  density="comfortable" hide-details></v-text-field>
+            <v-text-field v-model="filters.nombreCompleto" label="Nombre Completo" variant="outlined"  density="comfortable" hide-details></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
             <v-text-field v-model="filters.servicio" label="Servicio" variant="outlined"  density="comfortable" hide-details></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field v-model="filters.id_transaccion" label="ID Transacción" variant="outlined"  density="comfortable" hide-details></v-text-field>
+            <v-text-field v-model="filters.idTransaccion" label="ID Transacción" variant="outlined"  density="comfortable" hide-details></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
             <v-text-field v-model="filters.periodo" label="Periodo" variant="outlined" density="comfortable" hide-details></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field v-model="filters.codigo_deuda" label="Código Deuda" variant="outlined"  density="comfortable" hide-details></v-text-field>
+            <v-text-field v-model="filters.codigoDeuda" label="Código Deuda" variant="outlined"  density="comfortable" hide-details></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field v-model="filters.mensaje_deuda" label="Mensaje Deuda" variant="outlined"  density="comfortable" hide-details></v-text-field>
+            <v-text-field v-model="filters.mensajeDeuda" label="Mensaje Deuda" variant="outlined"  density="comfortable" hide-details></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field v-model="filters.mensaje_contrato" label="Mensaje Contrato" variant="outlined"  density="comfortable" hide-details></v-text-field>
+            <v-text-field v-model="filters.mensajeContrato" label="Mensaje Contrato" variant="outlined"  density="comfortable" hide-details></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field v-model="filters.tipo_documento" label="Tipo Documento" variant="outlined"  density="comfortable" hide-details></v-text-field>
+            <v-text-field v-model="filters.tipoDocumento" label="Tipo Documento" variant="outlined"  density="comfortable" hide-details></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field v-model="filters.numero_documento" label="Nro Documento" variant="outlined"  density="comfortable" hide-details></v-text-field>
+            <v-text-field v-model="filters.numeroDocumento" label="Nro Documento" variant="outlined"  density="comfortable" hide-details></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field v-model="filters.fecha_inicio_pago" label="Fecha Inicio Pago" type="date" variant="outlined"  density="comfortable" hide-details></v-text-field>
+            <v-text-field v-model="filters.fechaInicioPago" label="Fecha Inicio Pago" type="date" variant="outlined"  density="comfortable" hide-details></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field v-model="filters.fecha_fin_pago" label="Fecha Fin Pago" type="date" variant="outlined"  density="comfortable" hide-details></v-text-field>
+            <v-text-field v-model="filters.fechaFinPago" label="Fecha Fin Pago" type="date" variant="outlined"  density="comfortable" hide-details></v-text-field>
           </v-col>
         </v-row>
       </v-card-text>
@@ -56,17 +56,17 @@ const dialog = ref(false);
 
 // Filtros
 const filters = ref({
-  nombre_completo: '',
+  nombreCompleto: '',
   servicio: '',
-  id_transaccion: '',
+  idTransaccion: '',
   periodo: '',
-  codigo_deuda: '',
-  mensaje_deuda: '',
-  mensaje_contrato: '',
-  tipo_documento: '',
-  numero_documento: '',
-  fecha_inicio_pago: '',
-  fecha_fin_pago: ''
+  codigoDeuda: '',
+  mensajeDeuda: '',
+  mensajeContrato: '',
+  tipoDocumento: '',
+  numeroDocumento: '',
+  fechaInicioPago: '',
+  fechaFinPago: ''
 });
 
 // Emitir evento de filtros aplicados

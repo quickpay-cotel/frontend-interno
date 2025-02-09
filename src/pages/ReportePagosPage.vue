@@ -1,18 +1,18 @@
 <template>
-  <BaseLayout title="REPORTE DE PAGOS" subtitle="Bienvenido a reporte de pagos" :filtersApplied="filters" >
+  <BaseLayout title="REPORTE DE PAGOS" subtitle="Bienvenido a reporte de pagos" :filtersApplied="filters">
     <template #actions>
       <v-btn-group variant="outlined" divided>
 
-        <v-btn color="primary" >Mostrar Todos</v-btn>
+        <v-btn color="primary" @click="mostrarTodo()">Mostrar Todos</v-btn>
 
         <v-btn color="primary" @click="openFilterDialog">Aplicar Filtros</v-btn>
 
         <!-- Botón con ícono de PDF -->
-        <v-btn color="red" @click="downloadPDF" icon>
+        <v-btn color="red" @click="downloadFile('pdf')" icon>
           <v-icon>mdi-file-pdf-box</v-icon>
         </v-btn>
         <!-- Botón con ícono de Excel -->
-        <v-btn color="green" @click="downloadExcel" icon>
+        <v-btn color="green" @click="downloadFile('xlsx')" icon>
           <v-icon>mdi-file-excel-box</v-icon>
         </v-btn>
       </v-btn-group>
@@ -64,6 +64,8 @@
 <script setup>
 import BaseLayout from '@/layouts/BaseReportesLayout.vue';
 import FiltroPagosComponent from '@/components/ReportePagosPage/FiltroPagosComponent.vue';
+import { useLoadingStore } from '@/stores/useLoadingStore'
+const loadingStore = useLoadingStore()
 import { inject, ref } from 'vue';
 const $api = inject('api');
 const lstPagosRealizados = ref([])
@@ -74,8 +76,7 @@ const itemsPerPage = ref(5);
 const filtroComponent = ref(null);
 
 onMounted(async () => {
-  const resPagos = await $api.post(`/reservas/pagos-realizados`)
-  lstPagosRealizados.value = resPagos.data.result
+  mostrarTodo();
 })
 
 
@@ -83,11 +84,11 @@ onMounted(async () => {
 const filters = ref({});
 
 // Función para manejar los filtros cuando se aplican
-const handleFilters = (newFilters) => {
-  console.log("filtroooo");
+const handleFilters = async (newFilters) => {
   filters.value = newFilters;
-  console.log(filters.value.nombre_completo);
-  // Aquí puedes hacer lo que necesites con los filtros, como actualizar los reportes
+  const resPagos = await $api.post(`/reservas/pagos-realizados`, newFilters)
+  lstPagosRealizados.value = resPagos.data.result
+
 };
 
 // Función para abrir el diálogo desde el componente padre
@@ -96,6 +97,63 @@ const openFilterDialog = () => {
     filtroComponent.value.openDialog(); // Llamar al método expuesto en el hijo
   }
 };
+const downloadFile = async (type) => {
+  loadingStore.startLoading('generando reporte....')
+  try {
+    // Determinar el endpoint y tipo de archivo
+    const endpoints = {
+      pdf: "/reservas/pagos-realizados/descargar/pdf",
+      xlsx: "/reservas/pagos-realizados/descargar/xlsx"
+    };
 
+    const mimeTypes = {
+      pdf: "application/pdf",
+      xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    };
 
+    if (!endpoints[type]) {
+      console.error("Tipo de archivo no válido");
+      return;
+    }
+
+    // Hacer la petición a la API
+    const response = await $api.post(endpoints[type], filters.value, {
+      responseType: "blob", // Asegurar que recibimos un archivo binario
+    });
+
+    // Crear un Blob a partir de la respuesta
+    const blob = new Blob([response.data], { type: mimeTypes[type] });
+
+    // Crear una URL para el blob
+    const url = window.URL.createObjectURL(blob);
+
+    // Crear un enlace de descarga
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `reporte.${type}`; // Nombre dinámico según el tipo
+    document.body.appendChild(a);
+    a.click();
+
+    // Liberar la URL después de la descarga
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+
+    loadingStore.stopLoading()
+  } catch (error) {
+    console.error(`Error al descargar el archivo ${type}:`, error);
+    loadingStore.stopLoading()
+  }
+};
+const mostrarTodo = async () => {
+  loadingStore.startLoading('cargando pagos....')
+  try {
+    filters.value = {};
+    const resPagos = await $api.post(`/reservas/pagos-realizados`, filters.value)
+    lstPagosRealizados.value = resPagos.data.result;
+    loadingStore.stopLoading()
+  } catch (error) {
+    console.log(error);
+    loadingStore.stopLoading()
+  }
+}
 </script>

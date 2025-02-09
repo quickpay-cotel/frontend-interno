@@ -1,4 +1,5 @@
 <template>
+  <GlobalLoadingComponent></GlobalLoadingComponent>
   <div >
     <v-app class="background">
       <router-view />
@@ -7,7 +8,7 @@
 </template>
 
 <script setup>
-//
+import GlobalLoadingComponent from '@/components/common/GlobalLoadingComponent.vue'
 </script>
 <style scoped>
 .background {
