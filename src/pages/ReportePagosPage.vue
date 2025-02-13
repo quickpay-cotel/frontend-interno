@@ -56,6 +56,18 @@
           <td>{{ item.fecha_pago }}</td>
         </tr>
       </template>
+      <!-- 🔹 Pie de Tabla (SUMATORIA) -->
+      <template v-slot:tfoot>
+        <tfoot>
+          <tr style="color: #000DF8; font-size: 12px; font-weight: bold;">
+            <td colspan="6" style="text-align: right;">TOTAL:</td>
+            <td>{{ totalMonto.toFixed(2) }}</td>
+            <td>{{ totalComisionQP.toFixed(2) }}</td>
+            <td>{{ totalMontoFinal.toFixed(2) }}</td>
+            <td colspan="4"></td>
+          </tr>
+        </tfoot>
+      </template>
     </v-data-table>
 
     <!-- Componente hijo para filtros -->
@@ -81,6 +93,19 @@ onMounted(async () => {
   mostrarTodo();
 })
 
+
+/*const totalComisionQP = computed(() => {
+  let total = 0;
+  lstPagosRealizados.value.forEach(item => {
+    total = parseFloat(total) + parseFloat( item.comision_qp)
+    console.log(total.toFixed(2));
+  });
+  return total.toFixed(2);
+});*/
+
+const totalMonto = computed(() => lstPagosRealizados.value.reduce((sum, item) =>parseFloat( sum) +parseFloat( item.monto), 0));
+const totalComisionQP = computed(() => lstPagosRealizados.value.reduce((sum, item) => parseFloat(sum )+ parseFloat(item.comision_qp), 0));
+const totalMontoFinal = computed(() => lstPagosRealizados.value.reduce((sum, item) => parseFloat(sum )+ parseFloat(item.monto_final), 0));
 
 // Filtros recibidos desde el hijo
 const filters = ref({});
