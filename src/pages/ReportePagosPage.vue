@@ -24,43 +24,49 @@
         <thead>
           <tr class="custom-header" style="color: #000DF8; font-size: 12px;font-weight: bold;">
             <td>NRO</td>
-            <td>NOMBRE COMPLETO</td>
+            <td>CONTRATO/TELEFONO</td>
+            <td>NOMBRE</td>
+            <td>CI/NIT</td>
+            <td>EMAIL</td>
+            <td>TIPO SERVICIO</td>
             <td>SERVICIO</td>
-            <td>TRANSACCION</td>
             <td>PERIODO</td>
-            <td>CÓDIGO</td>
             <td>MONTO (Bs)</td>
             <td>COMISIÓN QP (Bs)</td>
             <td>MONTO FINAL (Bs)</td>
-            <td>MENSAJE DEUDA</td>
-            <td>MENSAJE CONTRATO</td>
-            <td>NRO DE DOCUMENTO</td>
-            <td>FECHA DE PAGO</td>
+            <td>FECHA Y HORA DE PAGO</td>
+            <td>ID TRANSACCION</td>
+            <td>CÓDIGO DEUDA</td>
+            <td>METODO PAGO</td>
+            <td>ENTIDAD COBRO</td>
           </tr>
         </thead>
       </template>
       <template v-slot:item="{ item, index }">
         <tr style="color: #000; font-size: 12px;font-weight: normal;">
           <td>{{ (page - 1) * itemsPerPage + index + 1 }}</td>
+          <td>{{ item.contrato_telefono }}</td>
           <td>{{ item.nombre_completo }}</td>
+          <td>{{ item.numero_documento }}</td>
+          <td>{{ item.email }}</td>
           <td>{{ item.servicio }}</td>
-          <td>{{ item.id_transaccion }}</td>
+          <td>{{ item.mensaje_deuda }}</td>
           <td>{{ item.periodo }}</td>
-          <td>{{ item.codigo_deuda }} </td>
           <td>{{ item.monto }}</td>
           <td>{{ item.comision_qp }}</td>
           <td>{{ item.monto_final }}</td>
-          <td>{{ item.mensaje_deuda }}</td>
-          <td>{{ item.mensaje_contrato }}</td>
-          <td>{{ item.numero_documento }}</td>
           <td>{{ item.fecha_pago }}</td>
+          <td>{{ item.id_transaccion }}</td>
+          <td>{{ item.codigo_deuda }} </td>
+          <td>{{ item.metodo_pago }}</td>
+          <td>{{ item.entidad_cobro }}</td>
         </tr>
       </template>
       <!-- 🔹 Pie de Tabla (SUMATORIA) -->
       <template v-slot:tfoot>
         <tfoot>
           <tr style="color: #000DF8; font-size: 12px; font-weight: bold;">
-            <td colspan="6" style="text-align: right;">TOTAL:</td>
+            <td colspan="7" style="text-align: right;">TOTAL:</td>
             <td>{{ totalMonto.toFixed(2) }}</td>
             <td>{{ totalComisionQP.toFixed(2) }}</td>
             <td>{{ totalMontoFinal.toFixed(2) }}</td>
@@ -92,16 +98,6 @@ const filtroComponent = ref(null);
 onMounted(async () => {
   mostrarTodo();
 })
-
-
-/*const totalComisionQP = computed(() => {
-  let total = 0;
-  lstPagosRealizados.value.forEach(item => {
-    total = parseFloat(total) + parseFloat( item.comision_qp)
-    console.log(total.toFixed(2));
-  });
-  return total.toFixed(2);
-});*/
 
 const totalMonto = computed(() => lstPagosRealizados.value.reduce((sum, item) =>parseFloat( sum) +parseFloat( item.monto), 0));
 const totalComisionQP = computed(() => lstPagosRealizados.value.reduce((sum, item) => parseFloat(sum )+ parseFloat(item.comision_qp), 0));
