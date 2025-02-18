@@ -14,8 +14,7 @@
       <!-- Línea divisoria -->
       <v-divider class="my-2"></v-divider>
       <!-- Nueva sección para mostrar los filtros aplicados -->
-
-      <v-card-text v-if="filtersApplied && !objetoEsvacio(filtersApplied)">
+      <v-card-text v-if="filtersApplied ">
         <h3 class="text-h6">Filtros Aplicados</h3>
         <v-row>
           <v-col v-for="(value, key) in filteredFilters" :key="key" cols="12" md="3" >
@@ -35,6 +34,7 @@
 
 <script setup>
 import { defineProps } from 'vue';
+
 const props = defineProps({
   title: String,     // Título de la página
   subtitle: String,  // Subtítulo opcional
@@ -43,9 +43,10 @@ const props = defineProps({
 
 // Computed para filtrar los valores vacíos
 const filteredFilters = computed(() => {
-  return Object.fromEntries(
-    Object.entries(props.filtersApplied).filter(([key, value]) => value) // Solo incluir los valores no vacíos
+  let obj  = Object.fromEntries(
+    Object.entries(props.filtersApplied).filter(([key, value]) => value !== null && value !== "")
   );
+  return obj;
 });
 
 // Formatear la clave de los filtros para mostrarla de manera más legible

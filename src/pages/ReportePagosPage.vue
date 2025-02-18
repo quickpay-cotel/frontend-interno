@@ -1,5 +1,5 @@
 <template>
-  <BaseLayout title="REPORTE DE PAGOS" subtitle="Bienvenido a reporte de pagos" :filtersApplied="filters">
+<BaseLayout title="REPORTE DE PAGOS" subtitle="Bienvenido a reporte de pagos" :filtersApplied="filters">
     <template #actions>
       <v-btn-group variant="outlined" divided>
 
