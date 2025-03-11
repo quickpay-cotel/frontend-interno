@@ -66,7 +66,7 @@
       <template v-slot:tfoot>
         <tfoot>
           <tr style="color: #000DF8; font-size: 12px; font-weight: bold;">
-            <td colspan="7" style="text-align: right;">TOTAL:</td>
+            <td colspan="8" style="text-align: right;">TOTAL:</td>
             <td>{{ totalMonto.toFixed(2) }}</td>
             <td>{{ totalComisionQP.toFixed(2) }}</td>
             <td>{{ totalMontoFinal.toFixed(2) }}</td>

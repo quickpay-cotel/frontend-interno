@@ -5,7 +5,7 @@
       <v-card-title class="headline">Aplicar Filtros</v-card-title>
       <v-card-text>
         <v-row>
-          <v-col cols="12" md="6">
+          <!--<v-col cols="12" md="6">
             <v-text-field v-model="filters.nombreCompleto" label="Nombre Completo" variant="outlined"  density="comfortable" hide-details clearable  ></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
@@ -31,7 +31,7 @@
           </v-col>
           <v-col cols="12" md="6">
             <v-text-field v-model="filters.numeroDocumento" label="Nro Documento" variant="outlined"  density="comfortable" hide-details clearable></v-text-field>
-          </v-col>
+          </v-col>-->
           <v-col cols="12" md="6">
             <v-text-field v-model="filters.fechaInicioPago" label="Fecha Inicio Pago" type="date" variant="outlined"  density="comfortable" hide-details clearable></v-text-field>
           </v-col>
