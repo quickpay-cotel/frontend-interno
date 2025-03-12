@@ -27,7 +27,7 @@
             <td>CONTRATO/TELEFONO</td>
             <td>NOMBRE</td>
             <td>CI/NIT</td>
-            <td>EMAIL</td>
+            <td>EMAIL / CELULAR</td>
             <td>TIPO SERVICIO</td>
             <td>SERVICIO</td>
             <td>PERIODO</td>
@@ -48,7 +48,8 @@
           <td>{{ item.contrato_telefono }}</td>
           <td>{{ item.nombre_completo }}</td>
           <td>{{ item.numero_documento }}</td>
-          <td>{{ item.email }}</td>
+          <td>{{ item.email }}<br>{{ item.nro_celular }}</td>
+
           <td>{{ item.servicio }}</td>
           <td>{{ item.mensaje_deuda }}</td>
           <td>{{ item.periodo }}</td>
