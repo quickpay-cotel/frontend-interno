@@ -96,9 +96,9 @@ const itemsPerPage = ref(5);
 // Referencia al componente hijo
 const filtroComponent = ref(null);
 
-onMounted(async () => {
+/*onMounted(async () => {
   mostrarTodo();
-})
+})*/
 
 const totalMonto = computed(() => lstPagosRealizados.value.reduce((sum, item) =>parseFloat( sum) +parseFloat( item.monto), 0));
 const totalComisionQP = computed(() => lstPagosRealizados.value.reduce((sum, item) => parseFloat(sum )+ parseFloat(item.comision_qp), 0));
@@ -168,7 +168,7 @@ const downloadFile = async (type) => {
     loadingStore.stopLoading()
   }
 };
-const mostrarTodo = async () => {
+/*const mostrarTodo = async () => {
   loadingStore.startLoading('cargando pagos....')
   try {
     filters.value = {};
@@ -179,5 +179,5 @@ const mostrarTodo = async () => {
     console.log(error);
     loadingStore.stopLoading()
   }
-}
+}*/
 </script>
