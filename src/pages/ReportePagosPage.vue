@@ -1,5 +1,5 @@
 <template>
-<BaseLayout title="REPORTE DE PAGOS" subtitle="Bienvenido a reporte de pagos" :filtersApplied="filters">
+  <BaseLayout title="REPORTE DE PAGOS" subtitle="Bienvenido a reporte de pagos" :filtersApplied="filters">
     <template #actions>
       <v-btn-group variant="outlined" divided>
 
@@ -100,9 +100,9 @@ const filtroComponent = ref(null);
   mostrarTodo();
 })*/
 
-const totalMonto = computed(() => lstPagosRealizados.value.reduce((sum, item) =>parseFloat( sum) +parseFloat( item.monto), 0));
-const totalComisionQP = computed(() => lstPagosRealizados.value.reduce((sum, item) => parseFloat(sum )+ parseFloat(item.comision_qp), 0));
-const totalMontoFinal = computed(() => lstPagosRealizados.value.reduce((sum, item) => parseFloat(sum )+ parseFloat(item.monto_final), 0));
+const totalMonto = computed(() => lstPagosRealizados.value.reduce((sum, item) => parseFloat(sum) + parseFloat(item.monto), 0));
+const totalComisionQP = computed(() => lstPagosRealizados.value.reduce((sum, item) => parseFloat(sum) + parseFloat(item.comision_qp), 0));
+const totalMontoFinal = computed(() => lstPagosRealizados.value.reduce((sum, item) => parseFloat(sum) + parseFloat(item.monto_final), 0));
 
 // Filtros recibidos desde el hijo
 const filters = ref({});
