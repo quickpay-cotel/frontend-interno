@@ -13,6 +13,7 @@ const routes = [
       { path: 'logs-consultas-externas', component: () => import('@/pages/LogConsultasExternasPage.vue'), }, // Página Home dentro del Layout
       { path: 'pagos-reservas', component: () => import('@/pages/PagosRevervasPage.vue'), }, // Página Home dentro del Layout
       { path: 'reporte-pagos', component: () => import('@/pages/ReportePagosPage.vue'), }, // Página Home dentro del Layout
+      { path: 'illa-documentos-ajuste', component: () => import('@/pages/illa/DocumentosAjustePage.vue'), }, 
     ],
   }
 ];

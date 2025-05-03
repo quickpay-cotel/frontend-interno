@@ -3,7 +3,7 @@
     <template #actions>
       <v-btn-group variant="outlined" divided>
 
-        <v-btn color="primary" @click="mostrarTodo()">Mostrar Todos</v-btn>
+        <!--<v-btn color="primary" @click="mostrarTodo()">Mostrar Todos</v-btn>-->
 
         <v-btn color="primary" @click="openFilterDialog">Aplicar Filtros</v-btn>
 
