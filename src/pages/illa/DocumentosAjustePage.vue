@@ -1,7 +1,33 @@
 <template>
-  <BaseLayout title="DCUMENTOS AJUSTE" subtitle="Bienvenido a reporte de pagos reservados"  >
+  <BaseLayout title="DOCUMENTOS DE AJUSTE" subtitle="Bienvenido a reporte de pagos reservados">
     <template #actions>
-
+      <v-row>
+        <v-col cols="12"  md="3" >
+asas
+        </v-col>
+        <v-col cols="12"  md="3" >aasas
+        </v-col>
+        <v-col cols="12"  md="3" >
+          <v-autocomplete
+            v-model="vDocumentoSectorId"
+            :items="lstDocumentoSector"
+             item-title="descripcion"
+            item-value="id"
+            density="compact"
+            label="Documento Sector"
+          ></v-autocomplete>
+        </v-col>
+        <v-col cols="12"  md="3" >
+          <v-autocomplete
+            v-model="vEstadoDocumentoId"
+            :items="lstEstadoDocumento"
+            item-title="descripcion"
+            item-value="id"
+            density="compact"
+            label="Estado de Documento"
+          ></v-autocomplete>
+        </v-col>
+      </v-row>
     </template>
     <v-data-table hide-default-header :items="lstAjustesTodos" :items-per-page-options="[5, 10, 15]"
       v-model:items-per-page="itemsPerPage" v-model:page="page">
@@ -49,8 +75,7 @@
         </tr>
       </template>
     </v-data-table>
-    <!-- Componente hijo para filtros -->
-    <FiltroPagosComponent ref="filtroComponent" @apply-filters="handleFilters" />
+
   </BaseLayout>
 </template>
 <script setup>
@@ -59,6 +84,10 @@ const $api = inject('api');
 import { useLoadingStore } from '@/stores/useLoadingStore'
 const loadingStore = useLoadingStore()
 const lstAjustesTodos = ref([])
+const lstEstadoDocumento=ref([{id:45,descripcion:'ACTIVO'},{id:46,descripcion:'ANULADO'}])
+const lstDocumentoSector=ref([{id:47,descripcion:'NOTA DE CREDITO DEBITO DESCUENTO'},{id:29,descripcion:'NOTA DE CONCILIACION'}])
+const vEstadoDocumentoId = ref(0);
+const vDocumentoSectorId = ref(0);
 onMounted(async () => {
   mostrarTodo();
 })
@@ -66,12 +95,12 @@ const mostrarTodo = async () => {
   loadingStore.startLoading('cargando ajustes....')
   try {
     const resAjustes = await $api.post(`/illa/documentos-ajuste`, {
-        businessId: 155,
-        fechaInicio: "01/03/2025 00:01",
-        fechaFin: "06/04/2025 00:05",
-        codigoDocumentoSector: 47,
-        estadoDocumentoId: 45
-})
+      businessId: 155,
+      fechaInicio: "01/03/2025 00:01",
+      fechaFin: "06/04/2025 00:05",
+      codigoDocumentoSector: 47,
+      estadoDocumentoId: 45
+    })
     lstAjustesTodos.value = resAjustes.data.result;
     loadingStore.stopLoading()
   } catch (error) {
