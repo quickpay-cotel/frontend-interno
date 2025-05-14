@@ -39,7 +39,7 @@
             <td>CÓDIGO DEUDA</td>
             <td>METODO PAGO</td>
             <td>ENTIDAD COBRO</td>
-            <td>ESTADO TRANSACCIÓN</td>
+            <!--<td>ESTADO TRANSACCIÓN</td>-->
           </tr>
         </thead>
       </template>
@@ -62,7 +62,7 @@
           <td>{{ item.codigo_deuda }} </td>
           <td>{{ item.metodo_pago }}</td>
           <td>{{ item.entidad_cobro }}</td>
-          <td>{{ item.estado_transaccion	 }}</td>
+          <!--<td>{{ item.estado_transaccion	 }}</td>-->
         </tr>
       </template>
       <!-- 🔹 Pie de Tabla (SUMATORIA) -->
