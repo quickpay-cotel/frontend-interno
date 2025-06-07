@@ -54,6 +54,15 @@ import { ref, defineEmits, defineExpose } from 'vue';
 // Define el estado para el diálogo
 const dialog = ref(false);
 
+function formatFechaParaInput(date) {
+  const año = date.getFullYear();
+  const mes = String(date.getMonth() + 1).padStart(2, '0');
+  const dia = String(date.getDate()).padStart(2, '0');
+  return `${año}-${mes}-${dia}`;
+}
+
+const hoy = new Date();
+
 // Filtros
 const filters = ref({
   nombreCompleto: '',
@@ -65,8 +74,8 @@ const filters = ref({
   mensajeContrato: '',
   tipoDocumento: '',
   numeroDocumento: '',
-  fechaInicioPago: '',
-  fechaFinPago: ''
+  fechaInicioPago:formatFechaParaInput(hoy),
+  fechaFinPago: formatFechaParaInput(hoy)
 });
 
 // Emitir evento de filtros aplicados
@@ -89,4 +98,6 @@ defineExpose({
     dialog.value = true;
   }
 });
+
+
 </script>
