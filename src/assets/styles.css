@@ -1,0 +1,12 @@
+/* src/assets/styles.css */
+.swal-text-white {
+  color: white !important;
+}
+
+.swal-text-black {
+  color: black !important;
+}
+
+.swal-bold {
+  font-weight: bold !important;
+}
