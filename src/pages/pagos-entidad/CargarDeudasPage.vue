@@ -6,24 +6,18 @@
       </v-btn-group>
     </template>
 
-    <DeudasTableComponent :items="lstDeudas" />
+    <DeudasTableComponent :items="lstDeudas" @anular-deuda="onAnularDeuda" />
 
   </BaseLayout>
 
   <!-- Diálogo de carga de archivos -->
-  <v-dialog v-model="showUploader" max-width="600" >
+  <v-dialog v-model="showUploader" max-width="600">
     <v-card>
       <v-card-title class="text-h6">Carga de Deudas</v-card-title>
       <v-card-text>
-        <ExcelUploaderComponent
-          endpoint="/cargas-excel/upload"
-          :accept="'.xlsx,.xls'"
-          title="CARGA DE DEUDAS"
-          input-label="Selecciona archivo Excel"
-          button-text="Enviar a servidor"
-          @upload-success="onUploadSuccess"
-          @upload-error="onUploadError"
-        />
+        <ExcelUploaderComponent endpoint="/cargas-excel/upload" :accept="'.xlsx,.xls'" title="CARGA DE DEUDAS"
+          input-label="Selecciona archivo Excel" button-text="Enviar a servidor" @upload-success="onUploadSuccess"
+          @upload-error="onUploadError" />
       </v-card-text>
       <v-card-actions>
         <v-spacer />
@@ -38,12 +32,7 @@
       <v-card-title class="text-h6 red--text">Error en la carga</v-card-title>
       <v-card-text>
         <div style="white-space: pre-wrap;">{{ visibleErrorMessage }}</div>
-        <v-btn
-          v-if="errorMessage.length > 200"
-          size="small"
-          variant="text"
-          @click="toggleShowFullMessage"
-        >
+        <v-btn v-if="errorMessage.length > 200" size="small" variant="text" @click="toggleShowFullMessage">
           {{ showFullMessage ? 'Ver menos' : 'Ver más' }}
         </v-btn>
       </v-card-text>
@@ -60,6 +49,8 @@ import BaseLayout from '@/layouts/BaseReportesLayout.vue'
 import ExcelUploaderComponent from '@/components/pagos-entidad/ExcelUploaderComponent.vue'
 import DeudasTableComponent from '@/components/pagos-entidad/DeudasTableComponent.vue'
 import { useLoadingStore } from '@/stores/useLoadingStore'
+import { showDialog } from '@/utils/alertUtils' // ✅ Importas aquí
+import { de } from 'vuetify/locale'
 
 const $api = inject('api')
 const loadingStore = useLoadingStore()
@@ -87,13 +78,37 @@ function toggleShowFullMessage() {
 async function loadDeudas() {
   loadingStore.startLoading('Cargando deudas...')
   try {
-    const r = await $api.post('/deudas/deudas-cargados', {})
+    const r = await $api.post('/deudas/deudas-por-usuario', {})
     lstDeudas.value = r.data.result
   } catch (error) {
     errorMessage.value = 'No se pudo cargar la lista de deudas.'
     showErrorDialog.value = true
   } finally {
     loadingStore.stopLoading()
+  }
+}
+const onAnularDeuda = async (deudaId) => {
+  try {
+
+    console.log(deudaId);
+    const { isConfirmed } = await showDialog({
+      icon: 'warning',
+      title: '¿Estás seguro?',
+      text: 'Esta acción anulará la deuda. ¿Deseas continuar?',
+      confirmButtonText: 'Sí, anular',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+    })
+
+    if (!isConfirmed) return
+
+    await $api.delete(`/deudas/anular-deuda/${deudaId}`)
+    await loadDeudas()
+  } catch (error) {
+    errorMessage.value = 'No se pudo anular la deuda. ' +
+      (error?.response?.data?.message || '')
+    showFullMessage.value = false
+    showErrorDialog.value = true
   }
 }
 
@@ -115,4 +130,3 @@ const onUploadError = (error) => {
   showErrorDialog.value = true
 }
 </script>
-

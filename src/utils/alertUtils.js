@@ -13,28 +13,35 @@ export const showToast = ({ icon, title, text }) => {
     showConfirmButton: false,
   })
 }
-
+// utils/alertUtils.js
 export const showDialog = ({
   icon,
   title,
   text,
   confirmButtonText = 'Aceptar',
-  confirmButtonColor = '#0D47A1' ,
-   confirmButtonTextClass = 'swal-text-white' // <- clase personalizada
+  confirmButtonColor = '#0D47A1',
+  confirmButtonTextClass = 'swal-text-white',
+  showCancelButton = false,
+  cancelButtonText = 'Cancelar',
+  cancelButtonTextClass = 'swal-text-white',
 }) => {
-  Swal.fire({
+  return Swal.fire({
     icon,
     title,
     text,
     confirmButtonText,
     confirmButtonColor,
+    showCancelButton,
+    cancelButtonText,
     allowOutsideClick: false,
     allowEscapeKey: false,
     customClass: {
       confirmButton: confirmButtonTextClass,
+      cancelButton: cancelButtonTextClass, // ✅ Añade esta línea
     },
   })
 }
+
 
 
 

@@ -1,11 +1,7 @@
 <template>
-  <v-data-table
-    hide-default-header
-    :items="items"
-    :items-per-page-options="[5, 10, 15]"
-    v-model:items-per-page="itemsPerPage"
-    v-model:page="page"
-  >
+  <v-data-table hide-default-header :items="items" :items-per-page-options="[5, 10, 15]"
+    v-model:items-per-page="itemsPerPage" v-model:page="page">
+    <!-- Cabecera -->
     <template v-slot:thead>
       <thead>
         <tr class="custom-header" style="color: #000DF8; font-size: 12px; font-weight: bold;">
@@ -22,10 +18,12 @@
           <td>EMAIL</td>
           <td>TELEFONO</td>
           <td>FECHA REGISTRO</td>
+          <td>ACCIONES</td> <!-- Nueva columna -->
         </tr>
       </thead>
     </template>
 
+    <!-- Filas -->
     <template v-slot:item="{ item, index }">
       <tr style="color: #000; font-size: 12px; font-weight: normal;">
         <td>{{ (page - 1) * itemsPerPage + index + 1 }}</td>
@@ -45,6 +43,12 @@
         <td>{{ item.email }}</td>
         <td>{{ item.telefono }}</td>
         <td>{{ item.fechaRegistro }}</td>
+        <td>
+          <v-icon size="18" color="pink" class="cursor-pointer" title="Anular deuda"
+            @click="$emit('anular-deuda', item.deudaId)">
+            mdi-delete
+          </v-icon>
+        </td>
       </tr>
     </template>
   </v-data-table>
