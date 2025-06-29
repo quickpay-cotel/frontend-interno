@@ -34,7 +34,7 @@
           {{ item.numeroDocumento }}<br />
           {{ item.complementoDocumento }}
         </td>
-        <td>{{ item.tipoPagoId }}</td>
+        <td>{{ item.tipoPago }}</td>
         <td>{{ item.codigoServicio }}</td>
         <td>{{ item.descripcionServicio }}</td>
         <td>{{ item.periodo }}</td>
@@ -44,10 +44,19 @@
         <td>{{ item.telefono }}</td>
         <td>{{ item.fechaRegistro }}</td>
         <td>
-          <v-icon size="18" color="pink" class="cursor-pointer" title="Anular deuda"
-            @click="$emit('anular-deuda', item.deudaId)">
-            mdi-delete
-          </v-icon>
+          <div class="d-inline-flex align-center" style="gap: 8px;">
+            <v-icon size="18" color="pink" class="cursor-pointer" title="Anular deuda"
+              @click="$emit('anular-deuda', item.deudaId)">
+              mdi-delete
+            </v-icon>
+
+            <v-icon size="18" color="blue" class="cursor-pointer" title="Modificar deuda"
+              @click="$emit('modificar-deuda', item)">
+              mdi-pencil
+            </v-icon>
+          </div>
+
+
         </td>
       </tr>
     </template>
