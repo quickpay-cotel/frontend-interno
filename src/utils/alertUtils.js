@@ -42,6 +42,30 @@ export const showDialog = ({
   })
 }
 
+// Función con configuración personalizada (puedes agregar más si es necesario)
+export const showCustomAlert = async (title, text, icon = 'warning') => {
+  return Swal.fire({
+    title: title,
+    text: text,
+    icon: icon,
+    confirmButtonColor: "orange",
+    cancelButtonColor: "#9b9b9b",
+    showCancelButton: true,
+    confirmButtonText: 'Aceptar',
+  });
+};
+
+export const basicMessage = (message) => {
+  Swal.fire({
+    icon: 'info',
+    title: 'Información',
+    text: message,
+    confirmButtonText: 'Aceptar',
+    confirmButtonColor: '#0D47A1',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+  });
+};
 
 
 

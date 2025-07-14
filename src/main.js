@@ -14,6 +14,10 @@ import App from './App.vue'
 // Composables
 import { createApp } from 'vue'
 import './assets/styles.css' // ← importa tus estilos
+
+import 'vue3-form-wizard/dist/style.css';
+
+
 const app = createApp(App)
 
 registerPlugins(app)

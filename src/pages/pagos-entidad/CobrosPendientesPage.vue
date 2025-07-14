@@ -128,14 +128,12 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-
-
 </template>
 <script setup>
 import { inject, ref, computed, onMounted } from 'vue'
 import BaseLayout from '@/layouts/BaseReportesLayout.vue'
-import ExcelUploaderComponent from '@/components/pagos-entidad/ExcelUploaderComponent.vue'
-import DeudasTableComponent from '@/components/pagos-entidad/DeudasTableComponent.vue'
+import ExcelUploaderComponent from '@/components/pagos-entidad/CobrosPendientesPage/ExcelUploaderComponent.vue'
+import DeudasTableComponent from '@/components/pagos-entidad/CobrosPendientesPage/CobrosPendientesTableComponent.vue'
 import { useLoadingStore } from '@/stores/useLoadingStore'
 import { showDialog } from '@/utils/alertUtils' // ✅ Importas aquí
 

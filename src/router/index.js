@@ -22,9 +22,10 @@ const routes = [
     component: Default, // Puedes usar el mismo layout si deseas que comparta Toolbar, etc.
     children: [
       { path: '', component: HomePage },
-      { path: 'cargar-deudas', component: () => import('@/pages/pagos-entidad/CargarDeudasPage.vue') },
+      { path: 'cobros-pendientes', component: () => import('@/pages/pagos-entidad/CobrosPendientesPage.vue') },
       { path: 'configuracion-perfil', component: () => import('@/pages/pagos-entidad/ConfiguracionPerfilPage.vue') },
-      { path: 'reporte-pagos', component: () => import('@/pages/pagos-entidad/ReportePagosPage.vue') }
+      { path: 'cobros-realizado', component: () => import('@/pages/pagos-entidad/ReportePagosPage.vue') },
+      { path: 'cobros-caja', component: () => import('@/pages/pagos-entidad/CobrosCajaPage.vue') }
     ],
   },
 ];

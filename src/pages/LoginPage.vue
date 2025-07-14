@@ -63,7 +63,7 @@ const login = async () => {
     });
     const token = response.data.result.access_token;
     localStorage.setItem("token", token); // Guardar el token en el almacenamiento local
-    router.push("/pagos-entidad/cargar-deudas");
+    router.push("/pagos-entidad/cobros-pendientes");
   } catch (error) {
     console.log(error);
     alert("Usuario o contraseña incorrectos");

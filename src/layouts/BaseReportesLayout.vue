@@ -57,14 +57,5 @@ const formatLabel = (label) => {
   return formatted;
 };
 
-const objetoEsvacio = (obj) => {
-  // Iterar sobre las propiedades del objeto
-  for (let key in obj) {
-    // Verificar si la propiedad no es vacía (considera: string vacío, null, undefined, etc.)
-    if (obj.hasOwnProperty(key) && obj[key] !== "" && obj[key] !== null && obj[key] !== undefined) {
-      return false; // Si hay al menos una propiedad con valor, no está vacío
-    }
-  }
-  return true; // Si todas las propiedades son vacías
-}
+
 </script>

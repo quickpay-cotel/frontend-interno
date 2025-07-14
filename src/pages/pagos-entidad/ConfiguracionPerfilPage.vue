@@ -18,17 +18,27 @@
             <input ref="logoInput" type="file" accept="image/*" @change="onLogoUpload" style="display: none;" />
           </v-col>
 
-          <!-- Botón para abrir diálogo de color -->
+          <!-- Botón para abrir diálogo de color primario -->
           <v-col cols="12" md="6">
-            <v-alert :color="primaryColor" class="mt-4" variant="tonal" border="start" prominent>
+            <v-alert color="primary" class="mt-4" variant="tonal" border="start" prominent>
               Vista previa del color principal
             </v-alert>
-            <v-btn color="primary" class="mt-4" @click="colorDialog = true">
+            <v-btn color="primary" class="mt-4" @click="openColorDialog('primario')">
               Cambiar color principal
             </v-btn>
           </v-col>
+          <!-- Botón para abrir diálogo de color secundario -->
           <v-col cols="12" md="6">
-            <v-text-field v-model="slugEmrepsa" color="primary" label="Slug Empresa" variant="underlined"></v-text-field>
+            <v-alert color="secondary" class="mt-4" variant="tonal" border="start" prominent>
+              Vista previa del color secundario
+            </v-alert>
+            <v-btn color="primary" class="mt-4" @click="openColorDialog('secundario')">
+              Cambiar color secundario
+            </v-btn>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-text-field v-model="slugEmrepsa" color="primary" label="Slug Empresa"
+              variant="underlined"></v-text-field>
             <v-btn color="primary" class="mt-4" @click="cambiarSlugEmpresa()">
               Cambiar slug empresa
             </v-btn>
@@ -45,7 +55,7 @@
           <v-col cols="12" sm="6"><strong>Nombre:</strong> {{ datosPersonaEmpresa.nombre_usuario }}</v-col>
           <v-col cols="12" sm="6"><strong>Apellido:</strong> {{ datosPersonaEmpresa.apellido_usuario }}</v-col>
           <v-col cols="12" sm="6"><strong>Empresa:</strong> {{ datosPersonaEmpresa.nombre_empresa || 'No registrado'
-          }}</v-col>
+            }}</v-col>
           <v-col cols="12" sm="6"><strong>NIT:</strong> {{ datosPersonaEmpresa.nit_empresa || 'No registrado' }}</v-col>
           <v-col cols="12"><strong>Correo:</strong> {{ datosPersonaEmpresa.correo_usuario }}</v-col>
         </v-row>
@@ -55,7 +65,9 @@
     <!-- Diálogo para cambiar color -->
     <v-dialog v-model="colorDialog" max-width="400">
       <v-card>
-        <v-card-title>Selecciona un nuevo color principal</v-card-title>
+        <v-card-title>
+          Selecciona un nuevo color {{ colorDialogType === 'primario' ? 'principal' : 'secundario' }}
+        </v-card-title>
         <v-card-text>
           <v-color-picker v-model="tempColor" hide-canvas show-swatches flat />
         </v-card-text>
@@ -73,23 +85,25 @@
 import { ref, onMounted, inject } from 'vue'
 import BaseLayout from '@/layouts/BaseReportesLayout.vue'
 import sinLogo from '@/assets/sin-logo.png'
-
+import { useUtilsStore } from '@/stores/useUtilsStore';
+const utilsStore = useUtilsStore()
 const $api = inject('api')
-const primaryColor = ref('#1976D2')
+
 const tempColor = ref('#1976D2')
 const logoInput = ref(null)
 const logoUrl = ref(null)
 const sinLogoUrl = sinLogo
 const datosPersonaEmpresa = ref({})
 const colorDialog = ref(false)
+const colorDialogType = ref('primario') // 'primario' o 'secundario'
 const slugEmrepsa = ref(null);
+
 function triggerFileInput() {
   logoInput.value?.click()
 }
 async function cambiarSlugEmpresa() {
   try {
     await $api.post('/usuario/guardar-slug-empresa', { slug: slugEmrepsa.value })
-    slugEmrepsa.value = response.data.result
     alert('Slug guardado correctamente')
   } catch (error) {
     console.error('Error al guardar slug:', error)
@@ -120,16 +134,35 @@ async function onLogoUpload(event) {
       })
       const filename = response.data.result
       logoUrl.value = `${$api.defaults.baseURL}/store/logos/${filename}?t=${Date.now()}`
+
+      // para actualizar imageen en pinia
+      const resConfEmpresa = await $api.get(`/usuario/obtener-configuracion-empresa`)
+      if (resConfEmpresa.data.success) {
+        utilsStore.setConfiguracionEmpresa(resConfEmpresa.data.result)
+      }
+
     } catch (error) {
       console.error('Error al subir el logo', error)
     }
   }
 }
 
+function openColorDialog(type) {
+  colorDialogType.value = type
+  colorDialog.value = true
+}
+
 async function confirmarColor() {
   try {
-    primaryColor.value = tempColor.value
-    await $api.post('/usuario/guardar-color', { color: primaryColor.value })
+    if (colorDialogType.value === 'primario') {
+      await $api.post('/usuario/guardar-color-primario', { color: tempColor.value });
+    } else {
+      await $api.post('/usuario/guardar-color-secundario', { color: tempColor.value });
+    }
+    const resConfEmpresa = await $api.get(`/usuario/obtener-configuracion-empresa`)
+    if (resConfEmpresa.data.success) {
+      utilsStore.setConfiguracionEmpresa(resConfEmpresa.data.result)
+    }
     colorDialog.value = false
     alert('Color guardado correctamente')
   } catch (error) {
@@ -142,15 +175,10 @@ onMounted(async () => {
   const res = await $api.get('/usuario/obtener-datos-persona-empresa')
   if (res.data.success) {
     datosPersonaEmpresa.value = res.data.result
-    if (datosPersonaEmpresa.value.logo_filename) {
-      logoUrl.value = `${$api.defaults.baseURL}/store/logos/${datosPersonaEmpresa.value.logo_filename}`
-    }
-    if (datosPersonaEmpresa.value.color_primario) {
-      primaryColor.value = datosPersonaEmpresa.value.color_primario
-      tempColor.value = datosPersonaEmpresa.value.color_primario
-    }
-    if (datosPersonaEmpresa.value.slug_empresa) {
-      slugEmrepsa.value = datosPersonaEmpresa.value.slug_empresa
+
+    const res = await $api.get('/usuario/obtener-configuracion-empresa')
+    if (res.data.success) {
+      utilsStore.setConfiguracionEmpresa(res.data.result)
     }
   }
 })
