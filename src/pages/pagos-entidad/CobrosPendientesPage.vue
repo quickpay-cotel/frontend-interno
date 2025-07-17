@@ -5,11 +5,8 @@
         <v-btn color="primary" @click="showUploader = true">CARGAR DEUDAS</v-btn>
       </v-btn-group>
     </template>
-
     <DeudasTableComponent :items="lstDeudas" @anular-deuda="onAnularDeuda" @modificar-deuda="onEditarDeuda" />
-
   </BaseLayout>
-
   <!-- Diálogo de carga de archivos -->
   <v-dialog v-model="showUploader" max-width="600">
     <v-card>
@@ -25,7 +22,6 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-
   <!-- Diálogo personalizado para mostrar mensajes de error largos -->
   <v-dialog v-model="showErrorDialog" max-width="600">
     <v-card>
@@ -168,7 +164,7 @@ function toggleShowFullMessage() {
 async function loadDeudas() {
   loadingStore.startLoading('Cargando deudas...')
   try {
-    const r = await $api.post('/deudas/deudas-por-usuario', {})
+    const r = await $api.post('/cobros-pendientes/deudas-por-usuario', {})
     lstDeudas.value = r.data.result
   } catch (error) {
     errorMessage.value = 'No se pudo cargar la lista de deudas.'

@@ -24,7 +24,7 @@ const routes = [
       { path: '', component: HomePage },
       { path: 'cobros-pendientes', component: () => import('@/pages/pagos-entidad/CobrosPendientesPage.vue') },
       { path: 'configuracion-perfil', component: () => import('@/pages/pagos-entidad/ConfiguracionPerfilPage.vue') },
-      { path: 'cobros-realizado', component: () => import('@/pages/pagos-entidad/ReportePagosPage.vue') },
+      { path: 'cobros-realizado', component: () => import('@/pages/pagos-entidad/CobrosRealizadosPage.vue') },
       { path: 'cobros-caja', component: () => import('@/pages/pagos-entidad/CobrosCajaPage.vue') }
     ],
   },

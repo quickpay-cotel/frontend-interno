@@ -4,7 +4,7 @@
     <!-- Cabecera -->
     <template v-slot:thead>
       <thead>
-        <tr class="custom-header bg-primary text-secondary"  style="font-size: 10px; font-weight: bold;">
+        <tr class="custom-header  text-black"  style="font-size: 12px; font-weight: bold;">
           <th>NRO</th>
           <th>CODIGO CLIENTE</th>
           <th>NOMBRE COMPLETO</th>
