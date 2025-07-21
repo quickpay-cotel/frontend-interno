@@ -158,8 +158,8 @@ const downloadFile = async (type) => {
   try {
     // Determinar el endpoint y tipo de archivo
     const endpoints = {
-      pdf: "/reservas/pagos-realizados/descargar/pdf",
-      xlsx: "/reservas/pagos-realizados/descargar/xlsx"
+      pdf: "/reportes_jasper/cobros-realizados/descargar/pdf",
+      xlsx: "/reportes_jasper/cobros-realizados/descargar/xlsx"
     };
 
     const mimeTypes = {

@@ -73,7 +73,7 @@ const buscarDeudas = async () => {
         parametroBusqueda: pasarelaCajaStore.datosBusqueda.parametroBusqueda.trim()
       }
       try {
-        let response = await $api.post('/cobros-caja/datos-pendiente-cliente', request);
+        let response = await $api.post('/cobros-caja/datos-cliente', request);
         pasarelaCajaStore.datosCliente = response.data.result;
         loadingStore.stopLoading()
       } catch (error) {

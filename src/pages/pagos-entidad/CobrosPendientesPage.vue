@@ -164,11 +164,11 @@ function toggleShowFullMessage() {
 async function loadDeudas() {
   loadingStore.startLoading('Cargando deudas...')
   try {
-    const r = await $api.post('/cobros-pendientes/deudas-por-usuario', {})
+    const r = await $api.post('/cobros-pendientes/cobros-pendiente-empresa-por-usuario', {})
     lstDeudas.value = r.data.result
   } catch (error) {
     errorMessage.value = 'No se pudo cargar la lista de deudas.'
-    showErrorDialog.value = true
+    //showErrorDialog.value = true
   } finally {
     loadingStore.stopLoading()
   }

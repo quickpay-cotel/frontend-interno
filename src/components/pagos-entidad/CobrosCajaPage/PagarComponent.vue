@@ -57,7 +57,7 @@
       </v-row>
       <v-row v-if="pasarelaCajaStore.lstDeudasSeleccionadas.length" justify="end" class="mt-4">
 
-        <div v-if="!pagado" class="text-center" >
+        <div v-if="!pagado" class="text-center">
           <v-btn class="text-none mb-2 text-secondary" color="primary" variant="flat" width="100%" rounded
             @click="realizarPago()">
             Pagar ahora
@@ -66,12 +66,12 @@
         <div v-else class="text-center" style="border: 1px solid #1976d2; border-radius: 16px; padding: 24px;">
           <v-icon class="mb-5" color="success" icon="mdi-check-circle" size="50"></v-icon>
           <h4 class="text-h6 mb-6">La transacción se ha realizado con éxito</h4>
+          
           <v-btn class="text-none mb-2" color="blue-darken-1" variant="flat" width="100%" rounded
             @click="clickDescargarFactura()">
             Descargar Factura
           </v-btn>
-          <v-btn class="text-none" color="green" variant="flat" width="100%" rounded
-            @click="clickDescargarRecibo()">
+          <v-btn class="text-none" color="green" variant="flat" width="100%" rounded @click="clickDescargarRecibo()">
             Descargar Recibo
           </v-btn>
         </div>
@@ -86,6 +86,7 @@ const loadingStore = useLoadingStore()
 const $api = inject('api')
 const pagado = ref(false);
 const facturaNombre = ref(null);
+const reciboNombre = ref(null);
 import { usePasarelaCajaStore } from '@/stores/usePasarelaCajaStore';
 const pasarelaCajaStore = usePasarelaCajaStore();
 const totalMontoSeleccionado = computed(() => {
@@ -109,6 +110,7 @@ const realizarPago = async () => {
   }
   pagado.value = false;
   facturaNombre.value = null;
+  reciboNombre.value = null;
   try {
     loadingStore.startLoading('Realizando el cobro ..')
     // Obtener solo los deudas_id en un array
@@ -116,7 +118,11 @@ const realizarPago = async () => {
     let response = await $api.post('/cobros-caja/confirma-pago-caja', deudasIds);
     if (response.data.success === true) {
       pagado.value = true;
-      facturaNombre.value = response.data.result[0];
+
+      const documentos = response.data.result;
+      facturaNombre.value = documentos.find(nombre => nombre.includes('factura')) ?? '';
+      reciboNombre.value = documentos.find(nombre => nombre.includes('recibo')) ?? '';
+
       basicMessage("Pago realizado con éxito");
     } else {
       basicMessage(response.data.message || "Error al realizar el pago");
@@ -133,10 +139,21 @@ const clickDescargarFactura = () => {
     return;
   }
   loadingStore.startLoading('descargando factura ..')
-  const fileUrl = `${$api.defaults.baseURL}/store/facturas/${facturaNombre.value}`;
+  const fileUrl = `${$api.defaults.baseURL}/recursos/facturas/${facturaNombre.value}`;
   console.log(fileUrl);
   window.open(fileUrl, '_blank');
-   loadingStore.stopLoading()
+  loadingStore.stopLoading()
+};
+const clickDescargarRecibo = () => {
+  if (!reciboNombre.value) {
+    basicMessage("No hay recibo disponible para descargar");
+    return;
+  }
+  loadingStore.startLoading('descargando recibo ..')
+  const fileUrl = `${$api.defaults.baseURL}/recursos/recibos/${reciboNombre.value}`;
+  console.log(fileUrl);
+  window.open(fileUrl, '_blank');
+  loadingStore.stopLoading()
 };
 </script>
 <style lang="css" scoped>

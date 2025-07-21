@@ -21,7 +21,7 @@ const buscaDeudas = async () => {
       tipoPago: pasarelaCajaStore.datosBusqueda.tipoPago,
       parametroBusqueda: pasarelaCajaStore.datosBusqueda.parametroBusqueda.trim()
     }
-    let response = await $api.post('/cobros-caja/cobros-pendiente-cliente', request);
+    let response = await $api.post('/cobros-caja/cobros-pendiente', request);
     // Mantener seleccionados previos
     const seleccionadosIds = pasarelaCajaStore.lstDeudasSeleccionadas.map(d => d.id);
     pasarelaCajaStore.lstDeudas = response.data.result.map(deuda => ({

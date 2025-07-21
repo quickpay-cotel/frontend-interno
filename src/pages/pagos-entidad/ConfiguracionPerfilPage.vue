@@ -8,6 +8,7 @@
           <!-- Logo -->
           <v-col cols="12" md="6">
             <br />
+    
             <div style="text-align: center;">
               <img @click="triggerFileInput" :src="logoUrl || sinLogoUrl" alt="Logo" class="logo-preview"
                 style="cursor: pointer; max-width: 150px; border: 1px dashed #ccc; border-radius: 8px;" />
@@ -91,12 +92,14 @@ const $api = inject('api')
 
 const tempColor = ref('#1976D2')
 const logoInput = ref(null)
-const logoUrl = ref(null)
+//const logoUrl = ref(null)
 const sinLogoUrl = sinLogo
 const datosPersonaEmpresa = ref({})
 const colorDialog = ref(false)
 const colorDialogType = ref('primario') // 'primario' o 'secundario'
 const slugEmrepsa = ref(null);
+import { useLoadingStore } from '@/stores/useLoadingStore'
+const loadingStore = useLoadingStore()
 
 function triggerFileInput() {
   logoInput.value?.click()
@@ -123,6 +126,7 @@ async function onLogoUpload(event) {
   }
 
   if (file) {
+      loadingStore.startLoading('cargando logo....')
     const formData = new FormData()
     formData.append('logo', file)
 
@@ -132,10 +136,7 @@ async function onLogoUpload(event) {
           'Content-Type': 'multipart/form-data',
         },
       })
-      const filename = response.data.result
-      logoUrl.value = `${$api.defaults.baseURL}/store/logos/${filename}?t=${Date.now()}`
 
-      // para actualizar imageen en pinia
       const resConfEmpresa = await $api.get(`/usuario/obtener-configuracion-empresa`)
       if (resConfEmpresa.data.success) {
         utilsStore.setConfiguracionEmpresa(resConfEmpresa.data.result)
@@ -144,6 +145,7 @@ async function onLogoUpload(event) {
     } catch (error) {
       console.error('Error al subir el logo', error)
     }
+       loadingStore.stopLoading()
   }
 }
 
@@ -170,7 +172,11 @@ async function confirmarColor() {
     alert('Error al guardar el color')
   }
 }
-
+const logoUrl = computed(() => {
+  const logo = utilsStore.configuracionEmpresa.logo_url || '';
+  console.log(logo);
+  return `${$api.defaults.baseURL}/recursos/logos/${logo}?t=${Date.now()}`;
+});
 onMounted(async () => {
   const res = await $api.get('/usuario/obtener-datos-persona-empresa')
   if (res.data.success) {

@@ -70,7 +70,7 @@ const $api = inject('api'); // instancia global Axios
 const logoUrl = computed(() => {
   const logo = utilsStore.configuracionEmpresa.logo_url || '';
   console.log(logo);
-  return `${$api.defaults.baseURL}/store/logos/${logo}?t=${Date.now()}`;
+  return `${$api.defaults.baseURL}/recursos/logos/${logo}?t=${Date.now()}`;
 });
 
 const logout = () => {
