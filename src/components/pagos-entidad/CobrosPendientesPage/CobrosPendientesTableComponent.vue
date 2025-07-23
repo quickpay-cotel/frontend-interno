@@ -4,7 +4,7 @@
     <!-- Cabecera -->
     <template v-slot:thead>
       <thead>
-        <tr class="custom-header  text-black"  style="font-size: 12px; font-weight: bold;">
+        <tr class="custom-header  text-black" style="font-size: 12px; font-weight: bold;">
           <th>NRO</th>
           <th>CODIGO CLIENTE</th>
           <th>NOMBRE COMPLETO</th>
@@ -14,12 +14,13 @@
           <th>CODIGO PRODUCTO</th>
           <th>CODIGO PRODUCTO SIN</th>
           <th>DESCRIPCION</th>
-          <th>CANTIDAD</th>
-          <th>PRECIO UNITARIO</th>
-          <th>MONTO DESCUENTO</th>
-          <th>MONTO TOTAL</th>
+          <th class="text-right">CANTIDAD</th>
+          <th class="text-right">PRECIO UNITARIO</th>
+          <th class="text-right">MONTO DESCUENTO</th>
+          <th class="text-right">MONTO TOTAL</th>
           <th>EMAIL</th>
           <th>TELEFONO</th>
+          <th>GENERA FACTURA?</th>
           <th>FECHA REGISTRO</th>
           <th>ACCIONES</th> <!-- Nueva columna -->
         </tr>
@@ -42,12 +43,13 @@
         <td>{{ item.codigoProducto }}</td>
         <td>{{ item.codigoProductoSin }}</td>
         <td>{{ item.descripcion }}</td>
-        <td>{{ item.cantidad }}</td>
-        <td>{{ item.precioUnitario }}</td>
-        <td>{{ item.montoDescuento }}</td>
-        <td>{{ item.montoTotal }}</td>
+        <td class="text-right">{{ item.cantidad }}</td>
+        <td class="text-right">{{ item.precioUnitario }}</td>
+        <td class="text-right">{{ item.montoDescuento }}</td>
+        <td class="text-right">{{ item.montoTotal }}</td>
         <td>{{ item.email }}</td>
         <td>{{ item.telefono }}</td>
+        <td>{{ item.generaFactura?'SI':'NO' }}</td>
         <td>{{ item.fechaRegistro }}</td>
         <td>
           <div class="d-inline-flex align-center" style="gap: 8px;">
@@ -82,6 +84,7 @@ const itemsPerPage = ref(5)
 </script>
 
 <style scoped>
-
-
+.text-right {
+  text-align: right;
+}
 </style>

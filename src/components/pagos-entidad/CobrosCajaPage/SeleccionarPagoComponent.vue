@@ -59,7 +59,8 @@ const headers = [
   { key: "periodo", title: "PERIODO", align: "start", },
   { key: "cantidad", title: "CANTIDAD", align: "end", },
   { key: "precioUnitario", title: "PRECIO UNITARIO", align: "end", },
-  { key: "montoDescuento", title: "MONTO DESCUENTO", align: "start", },
-  { key: "montoTotal", title: "MONTO TOTAL", align: "start", },
+  { key: "montoDescuento", title: "MONTO DESCUENTO", align: "end", },
+  { key: "montoTotal", title: "MONTO TOTAL", align: "end", },
+  { key: "generaFactura", title: "GENERA FACTURA?", align: "center", },
 ];
 </script>

@@ -36,7 +36,7 @@
             <td>EMAIL / CELULAR</td>
             <td>FECHA PAGADO</td>
             <td>MEDIO DE PAGO</td>
-            <td>METODO DE PAGO</td>
+            <td>ORIGEN DE PAGO</td>
             <td>COMPROBANTES</td>
             <!--<td>ESTADO TRANSACCIÓN</td>-->
           </tr>
@@ -63,7 +63,7 @@
           <td>{{ item.email }}<br>{{ item.nro_celular }}</td>
           <td>{{ item.fecha_pagado }}</td>
           <td>{{ item.medio_pago }}</td>
-          <td>{{ item.metodo_pago }}</td>
+          <td>{{ item.origen_pago }}</td>
           <td>
             <v-tooltip text="Factura PDF" location="top">
               <template #activator="{ props }">
@@ -83,8 +83,8 @@
 
             <v-tooltip text="Recibo" location="top">
               <template #activator="{ props }">
-                <a v-if="item.ruta_pdf" v-bind="props" :href="item.ruta_pdf" target="_blank">
-                  <v-icon color="orange">mdi-file-pdf</v-icon>
+                <a v-if="item.recibo_pdf" v-bind="props" :href="`${$api.defaults.baseURL}/recursos/recibos/${item.recibo_pdf}?t=${Date.now()}`" target="_blank">
+                  <v-icon color="orange">mdi-file-pdf-box</v-icon>
                 </a>
               </template>
             </v-tooltip>
