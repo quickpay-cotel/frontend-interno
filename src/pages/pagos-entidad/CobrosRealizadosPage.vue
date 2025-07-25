@@ -27,12 +27,12 @@
             <td>PRODUCTO</td>
             <td>PRODUCTO SIN</td>
             <td>DESCRIPCIÓN</td>
-            <td>CANTIDAD</td>
-            <td>PRECIO UNITARIO</td>
-            <td>MONTO DESCUENTO</td>
-            <td>MONTO TOTAL</td>
-            <td>COMISIÓN QP</td>
-            <td>MONTO FINAL</td>
+            <td class="text-right">CANTIDAD</td>
+            <td class="text-right">PRECIO UNITARIO</td>
+            <td class="text-right">MONTO DESCUENTO</td>
+            <td class="text-right">MONTO TOTAL</td>
+            <td class="text-right">COMISIÓN QP</td>
+            <td class="text-right">MONTO FINAL</td>
             <td>EMAIL / CELULAR</td>
             <td>FECHA PAGADO</td>
             <td>MEDIO DE PAGO</td>
@@ -54,13 +54,13 @@
           <td>{{ item.codigo_producto }}</td>
           <td>{{ item.codigo_producto_sin }}</td>
           <td>{{ item.descripcion }}</td>
-          <td>{{ item.cantidad }}</td>
-          <td>{{ item.precio_unitario }}</td>
-          <td>{{ item.monto_descuento }}</td>
-          <td>{{ item.monto_total }} </td>
-          <td>{{ item.comision_qp }}</td>
-          <td>{{ item.monto_final }}</td>
-          <td>{{ item.email }}<br>{{ item.nro_celular }}</td>
+          <td class="text-right">{{ item.cantidad }}</td>
+          <td class="text-right">{{ item.precio_unitario }}</td>
+          <td class="text-right">{{ item.monto_descuento }}</td>
+          <td class="text-right">{{ item.monto_total }} </td>
+          <td class="text-right">{{ item.comision_qp }}</td>
+          <td class="text-right">{{ item.monto_final }}</td>
+          <td>{{ item.email }}<br>{{ item.telefono }}</td>
           <td>{{ item.fecha_pagado }}</td>
           <td>{{ item.medio_pago }}</td>
           <td>{{ item.origen_pago }}</td>
@@ -201,3 +201,8 @@ const downloadFile = async (type) => {
   }
 };
 </script>
+<style scoped>
+.text-right {
+  text-align: right;
+}
+</style>

@@ -31,7 +31,9 @@ const buscaDeudas = async () => {
     pasarelaCajaStore.lstDeudasSeleccionadas = pasarelaCajaStore.lstDeudas.filter(r => r.seleccionado);
     loadingStore.stopLoading()
   } catch (error) {
+    console.log("error");
     pasarelaCajaStore.lstDeudasTodos = [];
+    pasarelaCajaStore.lstDeudas=[];
     pasarelaCajaStore.lstDeudasSeleccionadas = [];
     loadingStore.stopLoading()
   }

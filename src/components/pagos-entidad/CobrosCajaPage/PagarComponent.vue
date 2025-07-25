@@ -13,10 +13,10 @@
           <v-col cols="12" md="3"> <v-text-field color="primary" label="Correo Electrónico" variant="underlined"
               v-model="pasarelaCajaStore.datosCliente.email"></v-text-field>
           </v-col>
-          <v-col cols="12" md="3">
+          <!--<v-col cols="12" md="3">
             <v-text-field color="primary" label="Nro Celular" variant="underlined"
               v-model="pasarelaCajaStore.datosCliente.telefono" type="text" maxlength="20"></v-text-field>
-          </v-col>
+          </v-col>-->
         </v-row>
       </div>
     </v-card>
@@ -115,7 +115,10 @@ const realizarPago = async () => {
     loadingStore.startLoading('Realizando el cobro ..')
     // Obtener solo los deudas_id en un array
     const deudasIds = pasarelaCajaStore.lstDeudasSeleccionadas.map(deuda => deuda.deudaId);
-    let response = await $api.post('/cobros-caja/confirma-pago-caja', deudasIds);
+    let response = await $api.post('/cobros-caja/confirma-pago-caja',{
+      deudasIds:deudasIds,
+      correo:pasarelaCajaStore.datosCliente.email
+    } );
     if (response.data.success === true) {
       pagado.value = true;
 

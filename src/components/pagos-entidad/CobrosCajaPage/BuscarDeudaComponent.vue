@@ -75,6 +75,12 @@ const buscarDeudas = async () => {
       try {
         let response = await $api.post('/cobros-caja/datos-cliente', request);
         pasarelaCajaStore.datosCliente = response.data.result;
+
+        // limiando todos
+        pasarelaCajaStore.lstDeudasTodos = [];
+        pasarelaCajaStore.lstDeudas=[];
+        pasarelaCajaStore.lstDeudasSeleccionadas = [];
+
         loadingStore.stopLoading()
       } catch (error) {
         pasarelaCajaStore.datosCliente = null;
